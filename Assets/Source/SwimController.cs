@@ -5,6 +5,7 @@ public class SwimController : MonoBehaviour
     [SerializeField] GameObject _rightHand;
     [SerializeField] GameObject _leftHand;
     [SerializeField] TextMesh _text;
+    [SerializeField] bool _allowSuperSpeed;
     [SerializeField] bool _disallowY;
 
     [SerializeField] float _minimumSpeed = 0.01f;
@@ -15,6 +16,7 @@ public class SwimController : MonoBehaviour
     Vector3 _lastHookPos;
     Vector3 _velocity;
     Vector3 _stagedVel;
+    
 
     float _leftPressTime;
     float _rightPressTime;
@@ -64,6 +66,7 @@ public class SwimController : MonoBehaviour
         if (OVRInput.GetDown(OVRInput.RawButton.RHandTrigger)) {
             _rightPressTime = Time.timeSinceLevelLoad;
             if (checkRight) {
+                if (!_allowSuperSpeed) _velocity = Vector3.zero;
                 _hookedHand = _rightHand;
                 _hookButton = OVRInput.RawButton.RHandTrigger;
                 _lastHookPos = _hookedHand.transform.position - transform.position;
@@ -72,13 +75,14 @@ public class SwimController : MonoBehaviour
         if (OVRInput.GetDown(OVRInput.RawButton.LHandTrigger)) {
             _leftPressTime = Time.timeSinceLevelLoad;
             if (checkLeft) {
+                if (!_allowSuperSpeed) _velocity = Vector3.zero;
                 _hookedHand = _leftHand;
                 _hookButton = OVRInput.RawButton.LHandTrigger;
                 _lastHookPos = _hookedHand.transform.position - transform.position;
             }
         }
 
-        if (OVRInput.Get(OVRInput.RawButton.LHandTrigger) && OVRInput.Get(OVRInput.RawButton.RHandTrigger)) {
+        if (_allowSuperSpeed && OVRInput.Get(OVRInput.RawButton.LHandTrigger) && OVRInput.Get(OVRInput.RawButton.RHandTrigger)) {
             var deltaPressTime = Mathf.Abs(_leftPressTime - _rightPressTime);
             if (deltaPressTime < _stopGripTimeDiff) {
                 _velocity = Vector3.zero;
