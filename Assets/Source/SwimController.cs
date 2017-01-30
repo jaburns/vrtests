@@ -36,12 +36,13 @@ public class SwimController : MonoBehaviour
     {
         if (_hookedHand != null) {
             if (OVRInput.GetUp(_hookButton)) {
+                _velocity = Vector3.zero; // xxx
                 _hookedHand = null;
-                _velocity += _stagedVel;
-                if (_velocity.sqrMagnitude < _minimumSpeed * _minimumSpeed) _velocity = Vector3.zero;
-                if (_text != null) {
-                    _text.text = _velocity.magnitude.ToString();
-                }
+            //  _velocity += _stagedVel;
+            //  if (_velocity.sqrMagnitude < _minimumSpeed * _minimumSpeed) _velocity = Vector3.zero;
+            //  if (_text != null) {
+            //      _text.text = _velocity.magnitude.ToString();
+            //  }
                 _stagedVel = Vector3.zero;
             }
             else {
