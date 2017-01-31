@@ -4,7 +4,8 @@ public class SwimController : MonoBehaviour
 {
     [SerializeField] GameObject _rightHand;
     [SerializeField] GameObject _leftHand;
-    [SerializeField] TextMesh _text;
+    [SerializeField] TextMesh _speedText;
+    [SerializeField] bool _allowSliding = true;
     [SerializeField] bool _allowSuperSpeed;
     [SerializeField] bool _disallowY;
 
@@ -16,7 +17,6 @@ public class SwimController : MonoBehaviour
     Vector3 _lastHookPos;
     Vector3 _velocity;
     Vector3 _stagedVel;
-    
 
     float _leftPressTime;
     float _rightPressTime;
@@ -36,13 +36,16 @@ public class SwimController : MonoBehaviour
     {
         if (_hookedHand != null) {
             if (OVRInput.GetUp(_hookButton)) {
-                _velocity = Vector3.zero; // xxx
+                if (_allowSliding) {
+                    _velocity += _stagedVel;
+                    if (_velocity.sqrMagnitude < _minimumSpeed * _minimumSpeed) _velocity = Vector3.zero;
+                    if (_speedText != null) {
+                        _speedText.text = _velocity.magnitude.ToString();
+                    }
+                } else {
+                    _velocity = Vector3.zero; // xxx
+                }
                 _hookedHand = null;
-            //  _velocity += _stagedVel;
-            //  if (_velocity.sqrMagnitude < _minimumSpeed * _minimumSpeed) _velocity = Vector3.zero;
-            //  if (_text != null) {
-            //      _text.text = _velocity.magnitude.ToString();
-            //  }
                 _stagedVel = Vector3.zero;
             }
             else {
