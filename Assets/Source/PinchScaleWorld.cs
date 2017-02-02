@@ -5,19 +5,13 @@ public class PinchScaleWorld : MonoBehaviour
     [SerializeField] GameObject _ovrLeftHandAnchor;
     [SerializeField] GameObject _ovrRightHandAnchor;
     [SerializeField] float _minScale = 0.05f;
-
-    float _startingY;
+    [SerializeField] float _floorAbsoluteY = 0f;
 
     GameObject _hookParent;
     Transform _originalParent;
     float _initialHandRadians;
     float _initialHandDistance;
     float _initialScale;
-
-    void Awake()
-    {
-        _startingY = transform.position.y;
-    }
 
     void Update()
     {
@@ -61,7 +55,7 @@ public class PinchScaleWorld : MonoBehaviour
 
         _hookParent.transform.position = handMidpoint;
 
-        var newAbsoluteY = Mathf.Lerp(handMidpoint.y, _startingY, (absScale - _minScale) / (1f - _minScale));
+        var newAbsoluteY = Mathf.Lerp(handMidpoint.y, _floorAbsoluteY, (absScale - _minScale) / (1f - _minScale));
         transform.position = new Vector3(transform.position.x, newAbsoluteY, transform.position.z);
     }
 }
