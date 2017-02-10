@@ -19,7 +19,6 @@ public class PinchScalePlayer : MonoBehaviour
     Vector3 _targetPosition;
     Vector3? _previousPrimaryHookPos;
     float _initialHandDistance;
-
     float? _previousHandAngle;
 
     void Awake()
