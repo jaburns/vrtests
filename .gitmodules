@@ -1,0 +1,3 @@
+[submodule "Assets/unity-tools"]
+	path = Assets/unity-tools
+	url = git@github.com:jaburns/unity-tools

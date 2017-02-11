@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using jaburns.UnityTools;
 
 public class Elastoball : MonoBehaviour
 {
@@ -9,6 +10,8 @@ public class Elastoball : MonoBehaviour
     GameObject _elastic;
     GameObject _pinchAnchor;
 
+    Transform _realBallMesh;
+
     bool _enabled;
 
     void Start()
@@ -16,10 +19,22 @@ public class Elastoball : MonoBehaviour
         var pinchTarget = GetComponent<HandPinchTriggerTarget>();
         pinchTarget.PinchStart.Sub(gameObject, OnPinchStart);
         pinchTarget.PinchEnd.Sub(gameObject, OnPinchEnd);
+
+        _realBallMesh = _realBall.GetComponentInChildren<MeshRenderer>().transform;
+        _realBall.velocity = 5*Vector3.forward + 2*Vector3.right;
+
+        Time.timeScale = .1f;
     }
 
     void Update()
     {
+        var vXY = _realBall.velocity.XZ();
+        var axis = vXY.Rotated(-90).AsVector3WithY(0);
+        var angVel = vXY.magnitude / 0.25f;
+        var deltaAngle = angVel * Time.deltaTime * Mathf.Rad2Deg;
+
+        _realBallMesh.Rotate(axis, deltaAngle);
+
         transform.position = _realBall.transform.position.WithY(1.5f);
         _enabled = _realBall.velocity.sqrMagnitude < .1f;
 
