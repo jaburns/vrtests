@@ -22,8 +22,6 @@ public class Elastoball : MonoBehaviour
 
         _realBallMesh = _realBall.GetComponentInChildren<MeshRenderer>().transform;
         _realBall.velocity = 5*Vector3.forward + 2*Vector3.right;
-
-        Time.timeScale = .1f;
     }
 
     void Update()
