@@ -27,7 +27,7 @@ public class Elastoball : MonoBehaviour
     void Update()
     {
         var vXY = _realBall.velocity.XZ();
-        var axis = vXY.Rotated(-90).AsVector3WithY(0);
+        var axis = vXY.Rotated90().AsVector3WithY(0);
         var angVel = vXY.magnitude / 0.25f;
         var deltaAngle = angVel * Time.deltaTime * Mathf.Rad2Deg;
 

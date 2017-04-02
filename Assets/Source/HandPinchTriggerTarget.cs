@@ -25,7 +25,6 @@ public class HandPinchTriggerTarget : MonoBehaviour
 
     void OnTriggerEnter(Collider c)
     {
-        Debug.Log("ENTER");
         if (c.gameObject.name == HandPinchTriggers.LEFT_PINCH_OBJ_NAME) {
             _leftAnchor = c.gameObject;
             _leftHovering = true;
