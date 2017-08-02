@@ -13,7 +13,7 @@ public class PredictionLine : MonoBehaviour
 
     public void SetPrediction(Vector3 position, Vector3 velocity)
     {
-        _line.numPositions = STEPS;
+        _line.positionCount = STEPS;
         var posList = new Vector3[STEPS];
         var curPos = position;
         
